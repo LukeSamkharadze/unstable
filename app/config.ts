@@ -12,9 +12,6 @@ import {
 	sepolia,
 } from "wagmi/chains";
 
-// import { cookieStorage, createConfig } from "@account-kit/react";
-// import { mainnet, base, sepolia, alchemy } from "@account-kit/infra";
-
 export const queryClient = new QueryClient();
 
 export const wagmiConfig = createConfigWagmi({
@@ -92,3 +89,5 @@ export const CHAIN_CONFIG: Record<number, ChainInfo> = {
 		chain: polygonAmoy,
 	},
 };
+
+export const SUPPORTED_CHAINS = Object.values(CHAIN_CONFIG);

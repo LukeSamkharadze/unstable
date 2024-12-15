@@ -6,9 +6,6 @@ import { queryClient, wagmiConfig } from "./config";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 
-// import { accountKitConfig } from "./config";
-// import { AlchemyAccountProvider } from "@account-kit/react";
-
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -34,12 +31,7 @@ export default function RootLayout({
 			>
 				<WagmiProvider config={wagmiConfig}>
 					<QueryClientProvider client={queryClient}>
-						{/* <AlchemyAccountProvider
-							config={accountKitConfig}
-							queryClient={queryClient}
-						> */}
 						{children}
-						{/* </AlchemyAccountProvider> */}
 					</QueryClientProvider>
 				</WagmiProvider>
 			</body>
