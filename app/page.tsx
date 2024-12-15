@@ -73,7 +73,7 @@ export default function WalletOptions() {
       if (addresses.eoaWalletAddress && destinationChain) {
         destinationEthBalance.refetch();
       }
-    }, 5000); // 5 seconds
+    }, 3000); // 3 seconds
 
     return () => clearInterval(interval);
   }, [addresses, originChain, destinationChain, destinationAddress, usdcBalance, destinationUsdcBalance, destinationEthBalance]);
