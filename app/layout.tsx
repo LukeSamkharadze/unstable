@@ -5,6 +5,7 @@ import "./globals.css";
 import { queryClient, wagmiConfig } from "./config";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
+import { Suspense } from "react";
 
 
 const geistSans = Geist({
@@ -31,7 +32,9 @@ export default function RootLayout({
 			>
 				<WagmiProvider config={wagmiConfig}>
 					<QueryClientProvider client={queryClient}>
-						{children}
+						<Suspense fallback={<div>Loading...</div>}>
+							{children}
+						</Suspense>
 					</QueryClientProvider>
 				</WagmiProvider>
 			</body>
