@@ -24,6 +24,8 @@ if (!process.env.PIMLICO_API_KEY || !process.env.EOA_PRIVATE_KEY) {
 	throw new Error("Missing required environment variables");
 }
 
+export const maxDuration = 300; // 5 minutes
+
 const eoaAccount = privateKeyToAccount(process.env.EOA_PRIVATE_KEY as Hex);
 
 async function createSmartAccountClientForChain(chainId: number) {
