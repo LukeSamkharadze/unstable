@@ -70,8 +70,12 @@ async function createSmartAccountClientForChain(chainId: number) {
 export async function POST(request: Request) {
 	try {
 		const body = await request.json();
-		const { originChainId, destinationChainId, destinationAddress, amount } =
-			body;
+		const { originChainId, destinationChainId, amount } = body;
+
+		const [originSmartAccountClient, originPublicClient] =
+			await createSmartAccountClientForChain(originChainId);
+
+		const destinationAddress = originSmartAccountClient.account.address;
 
 		const originChainInfo = CHAIN_CONFIG[originChainId];
 		const destinationChainInfo = CHAIN_CONFIG[destinationChainId];
@@ -79,9 +83,6 @@ export async function POST(request: Request) {
 		if (!originChainInfo || !destinationChainInfo) {
 			throw new Error("Invalid chain configuration");
 		}
-
-		const [originSmartAccountClient, originPublicClient] =
-			await createSmartAccountClientForChain(originChainId);
 
 		// First approve USDC spending
 		await originSmartAccountClient.writeContract({

@@ -7,16 +7,18 @@ import { CHAIN_CONFIG, SUPPORTED_CHAINS } from "./config";
 import { useBalance } from "wagmi";
 import { sepolia } from "wagmi/chains";
 import { useRouter, useSearchParams } from 'next/navigation';
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 
 export default function WalletOptions() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const addresses = useAddresses();
 
-  const [destinationAddress, setDestinationAddress] = useState(() => {
-    return searchParams.get('destinationAddress') || "";
-  });
+  // const [destinationAddress, setDestinationAddress] = useState(() => {
+  //   return searchParams.get('destinationAddress') || "";
+  // });
+
+  const destinationAddress = useMemo(() => addresses.smartWalletAddress, [addresses]);
 
   const [transferAmount, setTransferAmount] = useState("");
   const [originChain, setOriginChain] = useState<number | undefined>(() => {
@@ -171,7 +173,7 @@ export default function WalletOptions() {
 
       <main className="flex-1 px-4 sm:px-6 py-8">
         <div className="max-w-2xl mx-auto space-y-6">
-          <h1 className="text-3xl font-bold text-gray-900 text-center">USDC Bridge</h1>
+          <h1 className="text-3xl font-bold text-gray-900 text-center">USDC Bridge via ERC-4337</h1>
 
           {/* Origin Chain Selection */}
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-gray-100 transition-all duration-200 hover:shadow-xl">
@@ -261,14 +263,15 @@ export default function WalletOptions() {
                             htmlFor="destinationAddress"
                             className="block text-sm font-medium text-gray-700 mb-2"
                           >
-                            Destination Address
+                            Destination Address (Transfer to different address is  disabled for now)
                           </label>
                           <input
+                            disabled
                             type="text"
                             id="destinationAddress"
                             value={destinationAddress}
                             onChange={(e) => {
-                              setDestinationAddress(e.target.value);
+                              // setDestinationAddress(e.target.value);
                               updateURLParams({
                                 destinationAddress: e.target.value || undefined
                               });
